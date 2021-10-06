@@ -40,13 +40,14 @@ public class Main {
         private final long ID;
         private String status;
 
-        public Citizens(String _name , int _age , long _ID){
+        public Citizens(String _name , int _age , long _ID ){
             this.name = _name;
             this.age = _age;
             this.ID = _ID;
             System.out.println("Citizen Name: " + _name);
             System.out.println("Age: " + _age);
             System.out.println("Unique ID: " + _ID);
+            status = "REGISTERED";
         }
     }
 
@@ -136,8 +137,9 @@ public class Main {
                     System.out.println("---------------------------------");
                 }
                 if(z >= 0 && z<18 ){
-                    System.out.println("Only allowed above 18");
+
                     Citizens c1 = new Citizens(r,z,k);
+                    System.out.println("Only allowed above 18");
                     System.out.println("---------------------------------");
                 }
                 else if(k<=999999999){
