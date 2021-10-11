@@ -24,9 +24,9 @@ public class Main {
 
     //Second class
     public static class Hospital{
-         final String name;
-         final long Pincode;
-         final int AllocatedId;
+         private final String name;
+         private final long Pincode;
+         private final int AllocatedId;
 
         public Hospital(String _name, long _pincode, int _allocatedId) {
             this.name = _name;
@@ -41,12 +41,12 @@ public class Main {
 
     //Third Class
     public static class Citizens{
-         final String name;
-         final int age;
-         final long ID;
-         String status;
-         private int  noofdoses;
-         private String vaccine;
+         private final String name;
+         private final int age;
+         private final long ID;
+         private final String status;
+         private final int  noofdoses;
+         private final String vaccine;
 
          public Citizens(String _name , int _age , long _ID , int _noofdoses, String _vaccine , String _status ){
             this.name = _name;
@@ -86,13 +86,13 @@ public class Main {
     }
 
     public static class Status{
-        private String status;
-        private String vaccine;
-        private int Day;
-        private int noofDoses;
-        private int Duedate;
-        private long Personid;
-        private long HospitalID;
+        private final String status;
+        private final String vaccine;
+        private final int Day;
+        private final int noofDoses;
+        private final int Duedate;
+        private final long Personid;
+        private final long HospitalID;
 
         public Status(String _Status , String  _vaccine ,int _Day , int _noofDoses , int _Due , long _Id, long _HospitalId ){
             this.status= _Status;
@@ -369,16 +369,57 @@ public class Main {
                             System.out.println("Enter the vaccine name ");
                             String name =sc.nextLine();
                             for(int j  = 0 ; j < slots.size() ; j++){
-                                if(name == slots.get(j).Vaccine){
-                                    long x = slots.get(j).HospitalId;
+                                if(name == slots.get(j).Vaccine) {
                                     System.out.println(slots.get(j).HospitalId + " " + hospital.get(j).name);
-                                    System.out.println("Enter the hospital id");
-                                    long choice1 = sc.nextLong();
-                                    System.out.println(slots.get(j).Slotno + "-> Day:" + slots.get(j).Dayno);
-                                    System.out.println("Quantity: " + slots.get(j).quantity + "Vaccine: " + slots.get(j).Vaccine);
-                                    System.out.println("choose the slot");
-                                    int slot= sc.nextInt();
+                                }
+                            }
+                            System.out.println("Enter the Unique Id of the hospital");
+                            int id = sc.nextInt();
+                            for (int l = 0; l < slots.size(); l++) {
+                                if (id == slots.get(l).HospitalId) {
+                                    System.out.println(l + "-> " + "Day: " + slots.get(l).Dayno + " Available + Qty:" + slots.get(l).quantity + " Vaccine " + slots.get(l).Vaccine);
 
+                                }
+                            }
+                            System.out.println("enter the slot number you choose");
+                            int d = sc.nextInt();
+
+                            String s = "";
+                            count2++;
+                            for (int u = 0; u < slots.size(); u++) {
+                                int due = 0;
+                                int so = 0;
+                                if (d == slots.get(u).slotno) {
+                                    int x = slots.get(u).Dayno;
+                                    int y = slots.get(u).HospitalId;
+                                    String v = slots.get(u).Vaccine;
+
+                                    for (int w = 0; w < vaccine.size(); w++) {
+                                        if (v.equals(vaccine.get(w).name)) {
+                                            so = vaccine.get(w).NoofDoses;
+                                            int a = vaccine.get(w).Gap;
+                                            due = x + a;
+
+                                        }
+
+                                    }
+                                    if (count2 == so) {
+                                        s = "FULLY VACCINATED";
+                                    } else {
+                                        s = "PARTAILLY VACCINATED";
+                                    }
+                                    Status s1 = new Status(s, v, x, so, due, n, y);
+                                    stat.add(s1);
+                                }
+                            }
+                            for (int we = 0; we < stat.size(); we++) {
+                                if (n == stat.get(we).Personid) {
+                                    System.out.println(stat.get(we).HospitalID);
+                                    System.out.println(stat.get(we).status);
+                                    System.out.println(stat.get(we).Day);
+                                    System.out.println(stat.get(we).Duedate);
+                                    System.out.println(stat.get(we).noofDoses);
+                                    System.out.println(stat.get(we).vaccine);
                                 }
                             }
                         }
@@ -390,7 +431,7 @@ public class Main {
                 }
                 System.out.println("---------------------------------");
             }
-            //set
+
             else if(q==6){
                 System.out.println("Enter the hospital ID");
                 for(int h = 0 ; h < hospital.size() ; h++){
@@ -405,15 +446,21 @@ public class Main {
 
                 System.out.println("---------------------------------");
             }
-            //not set
+
             else if(q==7){
                 System.out.println("Enter the your Unique ID");
                 long n = sc.nextLong();
                 for(int i  = 0 ; i < citizens.size() ; i++){
-                    if(n == citizens.get(i).ID){
-                        System.out.println(citizens.get(i).name);
-                        System.out.println(citizens.get(i).age);
-                        System.out.println(citizens.get(i).status);
+                    if(n == stat.get(i).Personid){
+                        String s = stat.get(i).status;
+                        System.out.println(stat.get(i).status);
+                        System.out.println("Vaccine Administered: " + stat.get(i).vaccine);
+                        if(s.equals("PARTIALLY VACCINATED")){
+                            System.out.println("Number of doses");
+                            System.out.println(stat.get(i).noofDoses);
+                            System.out.println("Due Date");
+                            System.out.println(stat.get(i).Duedate);
+                        }
                     }
                 }
                 System.out.println("---------------------------------");
